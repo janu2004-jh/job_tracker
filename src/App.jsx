@@ -1,37 +1,36 @@
-import React, { useState } from 'react'
-import { PageLayout } from './components/layout/PageLayout'
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AppShell } from './components/layout/AppShell'
+import {
+  LandingPage,
+  DashboardPage,
+  SettingsPage,
+  SavedPage,
+  DigestPage,
+  ProofPage,
+  TestPage,
+} from './pages'
+import { ShipPage } from './pages/ShipPage'
+import { FinalProofPage } from './pages/FinalProofPage'
 
 export default function App() {
-  const [proof, setProof] = useState({})
-
-  const handleProofChange = (key, value) => {
-    setProof((p) => ({ ...p, [key]: value }))
-  }
-
   return (
-    <PageLayout
-      projectName="Job Tracker"
-      step={1}
-      totalSteps={4}
-      status="In Progress"
-      headline="Design system"
-      subtext="Layout and tokens are in place. No product features yet."
-      primaryContent={
-        <div className="card">
-          <p className="text-body">
-            Primary workspace: main product interaction lives here. Clean cards, predictable components.
-          </p>
-        </div>
-      }
-      stepExplanation="Short step explanation. Copyable prompt and actions sit in the secondary panel."
-      promptContent={`Sample prompt text.\nCopy, Build in Lovable, It Worked, Error, Add Screenshot.`}
-      onCopy={() => {}}
-      onBuildInLovable={() => {}}
-      onItWorked={() => {}}
-      onError={() => {}}
-      onAddScreenshot={() => {}}
-      proof={proof}
-      onProofChange={handleProofChange}
-    />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AppShell />}>
+          <Route index element={<LandingPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="saved" element={<SavedPage />} />
+          <Route path="digest" element={<DigestPage />} />
+          <Route path="proof" element={<ProofPage />} />
+        </Route>
+        <Route path="/jt" element={<AppShell />}>
+          <Route path="07-test" element={<TestPage />} />
+          <Route path="08-ship" element={<ShipPage />} />
+          <Route path="proof" element={<FinalProofPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
